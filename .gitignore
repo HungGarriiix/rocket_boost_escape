@@ -22,8 +22,11 @@ sysinfo.txt
 *.sln
 *.suo
 *.svd
+*.sln.docstates
+*.rsuser
 *.unityproj
 *.user
+*.userosscache
 *.userprefs
 *.pidb
 .DS_Store
@@ -39,3 +42,9 @@ sysinfo.txt
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Ignore CACHE files
+*.cache
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
