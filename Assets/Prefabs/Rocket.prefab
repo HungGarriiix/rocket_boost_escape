@@ -152,6 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 1000
   rotate: 100
+  thrusterSound: {fileID: 8300000, guid: 73511a6db19bae84b93b7234a39560b8, type: 3}
 --- !u!114 &1626555637241765619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edf4fe7388acded4cb7ab7b30513149c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoadDelay: 1
+  successSFX: {fileID: 8300000, guid: 5ba52d325bf0126479034872d2e162ad, type: 3}
+  failureSFX: {fileID: 8300000, guid: 261de72ca5360eb408226a7b260a3a14, type: 3}
 --- !u!82 &1213192814289602525
 AudioSource:
   m_ObjectHideFlags: 0

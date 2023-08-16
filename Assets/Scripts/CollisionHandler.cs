@@ -6,12 +6,17 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] private float levelLoadDelay = 1f;
+    [SerializeField] private AudioClip successSFX;
+    [SerializeField] private AudioClip failureSFX;
+
     Rigidbody rb;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -35,7 +40,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartSuccessSequence()
     {
-        // add SFX upon success
+        audioSource.PlayOneShot(successSFX);
         // add particle effects upon success
         // add freeze rockets position upon success
         GetComponent<Movement>().enabled = false;
@@ -46,7 +51,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartCrashSequence()
     {
-        // add SFX upon crash
+        audioSource.PlayOneShot(failureSFX);
         // add particle effects upon crash
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", levelLoadDelay);

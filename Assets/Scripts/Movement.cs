@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    Rigidbody rb;
     [SerializeField] float mainThrust = 1000f;
     [SerializeField] float rotate = 100f;
+    [SerializeField] AudioClip thrusterSound;
+
     AudioSource audioSource;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +31,11 @@ public class Movement : MonoBehaviour
         {
             rb.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
             if (!audioSource.isPlaying)
-                audioSource.Play();
-            /*audioSource.enabled = true;*/
+                audioSource.PlayOneShot(thrusterSound);
         }
         else
         {
             audioSource.Stop();
-            /*audioSource.enabled = false;*/
         }
             
     }
