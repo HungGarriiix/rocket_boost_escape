@@ -11,6 +11,7 @@ public class CollisionHandler : MonoBehaviour
 
     Rigidbody rb;
     AudioSource audioSource;
+    bool isTransitioning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,8 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (isTransitioning) return;
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -40,17 +43,19 @@ public class CollisionHandler : MonoBehaviour
 
     private void StartSuccessSequence()
     {
+        isTransitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(successSFX);
         // add particle effects upon success
-        // add freeze rockets position upon success
         GetComponent<Movement>().enabled = false;
-        // freeze rocket movement
         rb.constraints = RigidbodyConstraints.FreezeAll;
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
     private void StartCrashSequence()
     {
+        isTransitioning = true;
+        audioSource.Stop();
         audioSource.PlayOneShot(failureSFX);
         // add particle effects upon crash
         GetComponent<Movement>().enabled = false;
