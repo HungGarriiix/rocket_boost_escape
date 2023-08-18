@@ -7,6 +7,9 @@ public class Movement : MonoBehaviour
     [SerializeField] float mainThrust = 1000f;
     [SerializeField] float rotate = 100f;
     [SerializeField] AudioClip thrusterSound;
+    [SerializeField] private ParticleSystem thrusterParticles;
+    [SerializeField] private ParticleSystem leftWingParticles;
+    [SerializeField] private ParticleSystem rightWingParticles;
 
     AudioSource audioSource;
     Rigidbody rb;
@@ -28,24 +31,48 @@ public class Movement : MonoBehaviour
     private void ProcessThrust()
     {
         if (Input.GetKey(KeyCode.Space))
-        {
-            rb.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
-            if (!audioSource.isPlaying)
-                audioSource.PlayOneShot(thrusterSound);
-        }
+            Thrusting();
         else
-        {
-            audioSource.Stop();
-        }
-            
+            StopThrusting();
     }
 
     private void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
-            ApplyRotation(rotate);
+            Rotating(rotate, leftWingParticles);
         else if (Input.GetKey(KeyCode.RightArrow))
-            ApplyRotation(-rotate);
+            Rotating(-rotate, rightWingParticles);
+        else
+            StopRotating();
+
+    }
+
+    private void Thrusting()
+    {
+        rb.AddRelativeForce(Vector3.up * Time.deltaTime * mainThrust);
+        if (!audioSource.isPlaying)
+            audioSource.PlayOneShot(thrusterSound);
+        if (!thrusterParticles.isPlaying)
+            thrusterParticles.Play();
+    }
+
+    private void StopThrusting()
+    {
+        audioSource.Stop();
+        thrusterParticles.Stop();
+    }
+
+    private void Rotating(float direction, ParticleSystem cor_particle)
+    {
+        ApplyRotation(direction);
+        if (!cor_particle.isPlaying)
+            cor_particle.Play();
+    }
+
+    private void StopRotating()
+    {
+        leftWingParticles.Stop();
+        rightWingParticles.Stop();
     }
 
     private void ApplyRotation(float rotateThisFrame)
